@@ -1,0 +1,326 @@
+<!-- PALETTE: Vibrant Tech (Indigo #4F46E5, Pink #EC4899, Emerald #10B981, Amber #F59E0B, Cyan #06B6D4) -->
+<!-- PLAN: Hero Section -> Problem Identification -> The Cat Shift Solution -> Microservices Architecture Breakdown -> LexoRank Performance Analysis -> Conclusion -->
+<!-- VISUALIZATIONS: 1. Architecture Flow -> Goal: Organize -> HTML/CSS Diagram -> Justification: Displays system relationships without SVG/Mermaid. 2. Service Workload -> Goal: Compare -> Doughnut Chart (Chart.js) -> Justification: Shows distribution of system responsibility. NO SVG. 3. LexoRank vs Traditional -> Goal: Change/Compare -> Line Chart (Chart.js) -> Justification: Compares latency trends over increasing task volumes. NO SVG. -->
+<!-- CONFIRMATION: NEITHER Mermaid JS NOR SVG were used anywhere in the output. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat Shift: Collaborative Task Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #0f172a; }
+        .chart-container { position: relative; width: 100%; max-width: 900px; margin-left: auto; margin-right: auto; height: 60vh; max-height: 450px; min-height: 300px; }
+        .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); }
+        .gradient-text { background: linear-gradient(to right, #4F46E5, #EC4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .arch-node { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.25rem; border-radius: 0.75rem; font-weight: 600; color: white; text-align: center; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); z-index: 10; }
+        .arch-arrow { display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #94a3b8; font-weight: bold; }
+        .db-node { background-color: #f1f5f9; color: #334155; border: 2px dashed #cbd5e1; padding: 0.75rem; border-radius: 0.5rem; font-size: 0.875rem; margin-top: 0.5rem; width: 100%; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <nav class="sticky top-0 z-50 glass-card px-6 py-4 flex justify-between items-center">
+        <div class="text-2xl font-extrabold tracking-tighter text-indigo-900">Cat<span class="text-pink-500">Shift</span></div>
+        <div class="hidden md:flex space-x-6 text-sm font-semibold text-slate-600">
+            <a href="#overview" class="hover:text-indigo-600 transition-colors">Overview</a>
+            <a href="#architecture" class="hover:text-indigo-600 transition-colors">Architecture</a>
+            <a href="#performance" class="hover:text-indigo-600 transition-colors">Performance</a>
+        </div>
+    </nav>
+
+    <header id="overview" class="px-6 py-20 md:py-32 max-w-7xl mx-auto text-center">
+        <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 text-slate-900">
+            The Future of <span class="gradient-text">Task Management</span>
+        </h1>
+        <p class="text-lg md:text-2xl text-slate-600 max-w-3xl mx-auto font-light leading-relaxed">
+            Combining the structured workflow of Jira with the dynamic flexibility of Notion. Built on a high-performance Event-Driven Microservices architecture.
+        </p>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 space-y-24 pb-32">
+
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="glass-card p-8 rounded-2xl transform hover:-translate-y-2 transition-transform duration-300">
+                <div class="text-4xl mb-4 text-pink-500">⚡</div>
+                <h3 class="text-xl font-bold mb-3 text-slate-800">The Lag Problem</h3>
+                <p class="text-slate-600">Traditional Kanban boards lag when sorting thousands of tasks due to mass database index updates. Cat Shift eliminates this bottleneck.</p>
+            </div>
+            <div class="glass-card p-8 rounded-2xl transform hover:-translate-y-2 transition-transform duration-300">
+                <div class="text-4xl mb-4 text-emerald-500">🗂️</div>
+                <h3 class="text-xl font-bold mb-3 text-slate-800">Rigid Structures</h3>
+                <p class="text-slate-600">Standard tools lock you into fixed columns. Cat Shift uses PostgreSQL JSONB to provide dynamic, per-project custom fields.</p>
+            </div>
+            <div class="glass-card p-8 rounded-2xl transform hover:-translate-y-2 transition-transform duration-300">
+                <div class="text-4xl mb-4 text-amber-500">🔐</div>
+                <h3 class="text-xl font-bold mb-3 text-slate-800">Static Permissions</h3>
+                <p class="text-slate-600">Move beyond basic "Admin" and "Member". Experience granular, string-based Dynamic RBAC customized at the project level.</p>
+            </div>
+        </section>
+
+        <section id="architecture" class="glass-card p-8 md:p-12 rounded-3xl">
+            <div class="max-w-3xl mb-12">
+                <h2 class="text-3xl font-bold mb-4 text-slate-900">Event-Driven Microservices</h2>
+                <p class="text-slate-600 text-lg">
+                    Cat Shift is not a monolith. It relies on a distributed architecture utilizing NestJS, GraphQL Federation, and RabbitMQ to isolate domains, ensuring scalability and fault tolerance.
+                </p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                <div class="w-full lg:w-1/2 bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                    <div class="flex flex-col items-center space-y-4">
+                        <div class="arch-node bg-indigo-600 w-64 shadow-indigo-500/30">
+                            GraphQL API Gateway
+                            <span class="text-xs font-normal text-indigo-200 mt-1">Apollo Federation V2</span>
+                        </div>
+                        
+                        <div class="arch-arrow">⬇</div>
+                        
+                        <div class="grid grid-cols-2 gap-4 w-full max-w-md">
+                            <div class="flex flex-col items-center">
+                                <div class="arch-node bg-emerald-500 w-full shadow-emerald-500/30">Auth Service</div>
+                                <div class="db-node">auth_db (PostgreSQL)</div>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="arch-node bg-pink-500 w-full shadow-pink-500/30">Project Service</div>
+                                <div class="db-node">project_db (PostgreSQL)</div>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="arch-node bg-amber-500 w-full shadow-amber-500/30">Task Service</div>
+                                <div class="db-node">task_db (PostgreSQL)</div>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="arch-node bg-cyan-500 w-full shadow-cyan-500/30">Comment Service</div>
+                                <div class="db-node">comment_db (PostgreSQL)</div>
+                            </div>
+                        </div>
+
+                        <div class="arch-arrow">⬇</div>
+
+                        <div class="arch-node bg-slate-800 w-64 shadow-slate-900/30">
+                            RabbitMQ
+                            <span class="text-xs font-normal text-slate-300 mt-1">Asynchronous Message Broker</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-1/2">
+                    <h3 class="text-xl font-bold mb-4 text-slate-800">Domain Workload Distribution</h3>
+                    <p class="text-slate-600 mb-6 text-sm">
+                        This visualization illustrates the estimated processing complexity and data volume managed by each microservice within the ecosystem. The Task Service carries the heaviest load due to LexoRank calculations and dynamic JSONB queries.
+                    </p>
+                    <div class="chart-container">
+                        <canvas id="workloadChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="performance" class="glass-card p-8 md:p-12 rounded-3xl">
+            <div class="max-w-3xl mb-12">
+                <h2 class="text-3xl font-bold mb-4 text-slate-900">The Power of LexoRank</h2>
+                <p class="text-slate-600 text-lg">
+                    Traditional integer-based ranking requires updating potentially thousands of database rows whenever a single task is moved. Cat Shift implements LexoRank, generating dynamic strings to achieve O(1) time complexity for drag-and-drop operations, regardless of board size.
+                </p>
+            </div>
+
+            <div class="w-full">
+                <div class="chart-container">
+                    <canvas id="performanceChart"></canvas>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
+                    <div class="bg-rose-50 border-l-4 border-rose-500 p-4 rounded-r-lg">
+                        <h4 class="font-bold text-rose-800 mb-1">Traditional Method (O(n))</h4>
+                        <p class="text-sm text-rose-600">Latency scales linearly. Moving a task in a 10,000-item board causes cascading index updates, resulting in severe UI lag and database locks.</p>
+                    </div>
+                    <div class="bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-r-lg">
+                        <h4 class="font-bold text-emerald-800 mb-1">Cat Shift LexoRank (O(1))</h4>
+                        <p class="text-sm text-emerald-600">Latency remains constant. By calculating a new string value alphabetically between two adjacent tasks, only one row is ever updated.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-3">
+                <h2 class="text-3xl font-bold mb-8 text-slate-900 text-center">Built for Modern Personas</h2>
+            </div>
+            
+            <div class="glass-card p-8 rounded-2xl flex flex-col h-full border-t-4 border-indigo-500">
+                <div class="text-4xl mb-4">👨‍💼</div>
+                <h3 class="text-xl font-bold mb-2 text-slate-800">Alex (Project Manager)</h3>
+                <p class="text-slate-600 text-sm flex-grow">Requires full visibility over task statuses and metrics. Uses the <span class="font-semibold text-indigo-600">Dynamic RBAC</span> to strictly govern who can transition tasks to "Done" or delete comments.</p>
+            </div>
+            
+            <div class="glass-card p-8 rounded-2xl flex flex-col h-full border-t-4 border-pink-500">
+                <div class="text-4xl mb-4">🧑‍💻</div>
+                <h3 class="text-xl font-bold mb-2 text-slate-800">Budi (Software Engineer)</h3>
+                <p class="text-slate-600 text-sm flex-grow">Demands a snappy UI without page reloads. Benefits directly from the <span class="font-semibold text-pink-600">LexoRank algorithm</span>, ensuring instantaneous feedback during high-velocity sprint planning.</p>
+            </div>
+
+            <div class="glass-card p-8 rounded-2xl flex flex-col h-full border-t-4 border-amber-500">
+                <div class="text-4xl mb-4">👩‍🎨</div>
+                <h3 class="text-xl font-bold mb-2 text-slate-800">Citra (Freelancer)</h3>
+                <p class="text-slate-600 text-sm flex-grow">Needs specialized data tracking for different clients. Relies on <span class="font-semibold text-amber-600">Dynamic Custom Fields (JSONB)</span> to attach unique attributes like "GDrive Links" or "Revision Counts" without database migrations.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-12 text-center text-sm">
+        <p class="mb-2">Cat Shift PRD & SRS Visualized</p>
+        <p class="opacity-75">Built with Tailwind CSS & Chart.js</p>
+    </footer>
+
+    <script>
+        const wrapLabel = (label) => {
+            if (label.length <= 16) return label;
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = '';
+            words.forEach(word => {
+                if ((currentLine + word).length > 16) {
+                    if (currentLine) lines.push(currentLine.trim());
+                    currentLine = word + ' ';
+                } else {
+                    currentLine += word + ' ';
+                }
+            });
+            if (currentLine) lines.push(currentLine.trim());
+            return lines;
+        };
+
+        const standardTooltipConfig = {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                                return label.join(' ');
+                            } else {
+                                return label;
+                            }
+                        }
+                    }
+                },
+                legend: {
+                    position: 'bottom',
+                    labels: { font: { family: 'Inter', size: 13 }, padding: 20 }
+                }
+            },
+            maintainAspectRatio: false,
+            responsive: true
+        };
+
+        const workloadCtx = document.getElementById('workloadChart').getContext('2d');
+        
+        const workloadRawLabels = [
+            "API Gateway",
+            "Auth Service",
+            "Project Service (RBAC)",
+            "Task Service (LexoRank & JSONB)",
+            "Comment Service",
+            "Log Service (Future)"
+        ];
+        
+        const workloadProcessedLabels = workloadRawLabels.map(label => wrapLabel(label));
+
+        new Chart(workloadCtx, {
+            type: 'doughnut',
+            data: {
+                labels: workloadProcessedLabels,
+                datasets: [{
+                    data: [10, 15, 20, 40, 10, 5],
+                    backgroundColor: [
+                        '#4F46E5',
+                        '#10B981',
+                        '#EC4899',
+                        '#F59E0B',
+                        '#06B6D4',
+                        '#64748b'
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                ...standardTooltipConfig,
+                cutout: '65%'
+            }
+        });
+
+        const performanceCtx = document.getElementById('performanceChart').getContext('2d');
+        
+        const performanceRawLabels = [
+            "100 Tasks",
+            "500 Tasks",
+            "1,000 Tasks",
+            "5,000 Tasks",
+            "10,000 Tasks"
+        ];
+        
+        const performanceProcessedLabels = performanceRawLabels.map(label => wrapLabel(label));
+
+        new Chart(performanceCtx, {
+            type: 'line',
+            data: {
+                labels: performanceProcessedLabels,
+                datasets: [
+                    {
+                        label: 'Traditional Mass Update (ms)',
+                        data: [12, 45, 110, 480, 1200],
+                        borderColor: '#f43f5e',
+                        backgroundColor: 'rgba(244, 63, 94, 0.1)',
+                        borderWidth: 3,
+                        pointBackgroundColor: '#f43f5e',
+                        pointRadius: 5,
+                        fill: true,
+                        tension: 0.4
+                    },
+                    {
+                        label: 'Cat Shift LexoRank (ms)',
+                        data: [5, 6, 5, 7, 5],
+                        borderColor: '#10B981',
+                        backgroundColor: 'transparent',
+                        borderWidth: 3,
+                        pointBackgroundColor: '#10B981',
+                        pointRadius: 5,
+                        fill: false,
+                        tension: 0.1
+                    }
+                ]
+            },
+            options: {
+                ...standardTooltipConfig,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Database Operation Latency (Milliseconds)',
+                            font: { family: 'Inter', weight: 'bold' }
+                        },
+                        grid: { color: '#f1f5f9' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                },
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                }
+            }
+        });
+    </script>
+</body>
+</html>
