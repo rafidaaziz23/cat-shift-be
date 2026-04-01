@@ -20,10 +20,19 @@
     "test:e2e": "jest --config ./apps/cat-shift-be/apps/comment-service/cat-shift-be/test/jest-e2e.json"
   },
   "dependencies": {
+    "@apollo/gateway": "^2.13.3",
+    "@apollo/server": "^5.5.0",
+    "@apollo/subgraph": "^2.13.3",
+    "@as-integrations/express5": "^1.1.2",
+    "@nestjs/apollo": "^13.2.4",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
+    "@nestjs/graphql": "^13.2.4",
     "@nestjs/platform-express": "^9.0.0",
     "@prisma/client": "^7.5.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.15.1",
+    "graphql": "^16.13.2",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0"
   },
